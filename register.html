@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - Coffee Cafe</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body { background: url('coffee_background.jpg') center/cover no-repeat; font-family: Arial; margin:0; }
+header { background: rgba(75,46,30,0.85); color:white; padding:15px; text-align:center;}
+.menu-section { background: rgba(255,248,238,0.95); max-width:400px; margin:50px auto; padding:30px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.3);}
+input { padding:10px; width:90%; border-radius:5px; border:1px solid #aaa; margin-bottom:15px;}
+button { background:#4b2e1e; color:white; border:none; padding:10px 15px; cursor:pointer; border-radius:5px; width:95%;}
+button:hover { background:#6a3d29;}
+#regMsg { text-align:center; margin-top:10px; font-weight:bold;}
+#goHomeBtnContainer { text-align:center; margin-top:15px;}
+</style>
+</head>
+<body>
+
+<header><h1>Register</h1></header>
+<section class="menu-section">
+<h2>Create Your Account</h2>
+<input id="regName" placeholder="Full Name"><br>
+<input id="regEmail" placeholder="Email"><br>
+<input id="regPass" type="password" placeholder="Password"><br>
+<button onclick="registerUser()">Register</button>
+<p id="regMsg"></p>
+<div id="goHomeBtnContainer"></div>
+</section>
+
+<script>
+regName.addEventListener("keypress", e=>{ if(e.key==="Enter") regEmail.focus(); });
+regEmail.addEventListener("keypress", e=>{ if(e.key==="Enter") regPass.focus(); });
+regPass.addEventListener("keypress", e=>{ if(e.key==="Enter") registerUser(); });
+
+function registerUser(){
+    let name=regName.value.trim(), email=regEmail.value.trim(), pass=regPass.value.trim();
+    if(!name||!email||!pass){ alert("Please fill all fields"); return;}
+    fetch('backend/register.php',{method:'POST', body:JSON.stringify({name,email,pass})})
+    .then(res=>res.json()).then(data=>{
+        if(data.status==="success"){
+            regMsg.innerText=data.msg;
+            const btn=document.createElement("button");
+            btn.innerText="Go to Home"; btn.onclick=()=>window.location.href="index.html";
+            const container=document.getElementById("goHomeBtnContainer"); container.innerHTML=""; container.appendChild(btn);
+            setTimeout(()=>window.location.href="index.html",5000);
+        } else { alert(data.msg);}
+    });
+}
+</script>
+</body>
+</html>

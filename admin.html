@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+<h1>Admin Dashboard</h1>
+<nav>
+<a href="index.html">Home</a>
+<a href="order.html">Order</a>
+<a href="admin.html">Admin</a>
+</nav>
+</header>
+
+<section class="menu-section">
+<h2>All Orders</h2>
+<button onclick="loadOrders()">Refresh</button>
+<div id="ordersList"></div>
+</section>
+
+<script>
+function loadOrders(){
+    fetch('get_orders.php').then(res=>res.json()).then(orders=>{
+        let html="";
+        orders.forEach((o,i)=>{
+            html+=`<div style="border:1px solid #ccc;padding:10px;margin:10px;">
+            <h3>Order ${i+1}</h3>
+            <p><b>Name:</b> ${o.name}</p>
+            <p><b>Phone:</b> ${o.phone}</p>
+            <p><b>Time:</b> ${o.time}</p>
+            <ul>${o.cart.map(c=>`<li>${c.name} - ₹${c.price}</li>`).join("")}</ul>
+            </div>`;
+        });
+        document.getElementById("ordersList").innerHTML=html;
+    });
+}
+loadOrders();
+</script>
+</body>
+</html>

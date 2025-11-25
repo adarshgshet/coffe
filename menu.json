@@ -1,0 +1,8 @@
+[
+    { "name": "Espresso", "price": 249, "img": "espresso.jpg" },
+    { "name": "Cappuccino", "price": 373, "img": "cappuccino.jpg" },
+    { "name": "Latte", "price": 332, "img": "latte.jpg" },
+    { "name": "Mocha", "price": 394, "img": "mocha.jpg" },
+    { "name": "Macchiato", "price": 415, "img": "macchiato.jpg" },
+    { "name": "Iced Coffee", "price": 290, "img": "icedcoffee.jpg" }
+]
